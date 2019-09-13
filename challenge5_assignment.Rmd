@@ -37,9 +37,11 @@ cd --help
 
 For the command `ls -lh` what effect does the `-lh` argument have (hint: single letter flags can often be combined , so `-lh` is equvalent to `-l -h`).  Show how you figure this out in the chunk below, then use words to give the answer below the chunk. It might also be a good idea to run `ls`, `ls -h`, `ls -l`, `ls -lh` to get a better feel for the effects of these flags.
 
-```{bash error=TRUE}
+```{bash}
 
 ```
+
+
 
 
 
@@ -69,6 +71,54 @@ field_notes/
 ```{bash}
 
 ```
+
+
+## Bonus: Bash Variables
+
+### Defining and Using Bash Variables
+Bash is a full fledged programming language.  Like other programming languages, bash supports variables.  Here is an example of defining and using variables in bash.
+
+```{bash variable_example}
+FAVORITE_FRUIT="apples"
+
+echo "I like ${FAVORITE_FRUIT}."
+```
+
+### Care and Feeding of Bash Variables
+One difference between bash and most other programming languages is that, by default, it doesn't complain if you use a variable that you haven't defined, bash just assumes that the value of an undefined variable is an empty string
+
+```{bash undefined_vars}
+echo "I like drinking ${FAVORITE_DRINK}."
+```
+
+It can be dangerous to use undefined variables, so it is a good idea to set bash so that it *does* complain if you try to use an undefined variable, you can do this with the command `set -u`.
+```{bash set_u, error=TRUE}
+set -u
+echo "I like drinking ${FAVORITE_DRINK}."
+```
+
+### Global Bash Variables in RMarkdown
+One quirk of bash chunks in Rmarkdown documents is that each bash chunk in an has it's own environment independent of the other chunks, so variables defined in one bash chunk are not available in other chunks
+
+```{bash independent_chunks, error=TRUE}
+set -u
+echo "I like ${FAVORITE_FRUIT}."
+```
+
+One hack that allows you to share bash variables between bash chunks is to set a bash variable in an *R chunk* using the R function `Sys.setenv`.  
+
+Look up how to use `Sys.setenv`, then use the R chunk below to define the bash variable `$FAVORITE_DESSERT` so that the bash chunk below runs correctly
+
+```{r}
+
+```
+
+
+```{bash test_Sys_setenv}
+set -u
+echo "My favorite dessert is ${FAVORITE_DESSERT}."
+```
+
 
 
 

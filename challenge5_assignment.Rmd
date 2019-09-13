@@ -1,0 +1,80 @@
+---
+title: "Challenge 5"
+subtitle: "She sells bash shells by the seashore"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Challenge 5
+These questions are based on the following SWC lessions.  You should be able to find answers to very similar problems within these lessons.  All of your answers should use *bash* not *R*.
+
+- [Introducing the Shell](http://swcarpentry.github.io/shell-novice/01-intro/index.html)
+- [Navigating Files and Directories](http://swcarpentry.github.io/shell-novice/02-filedir/index.html)
+- [Working With Files and Directories](http://swcarpentry.github.io/shell-novice/03-create/index.html)
+- [Permissions](http://swcarpentry.github.io/shell-extras/04-permissions/)
+
+
+## Download data
+Run this chunk to download the data for this challenge.
+
+```{bash, download_data, engine.opts='-l'}
+wget --no-verbose --no-check-certificate -O data-shell.zip https://swcarpentry.github.io/shell-novice/data/data-shell.zip
+unzip -oq data-shell.zip
+rm -f data-shell.zip
+```
+
+You should *NOT* add `data-shell/` to your git repository!  You might want to put `data-shell/` in the [.gitignore](https://gitlab.oit.duke.edu/IBIEM/IBIEM_2018_2019/blob/master/content/bootcamp/040_git_overview.md#ignoring-things) for this repo so that it doesn't show up in your Git pane.
+
+
+## Navigating Files and Directories
+
+### Getting Help
+There are several ways to get information on a given program.  The internet can be useful, but it should be used with some caution, because the version you have installed might be different than the version that is documented.  The safest starting point is to use help information built into the computer you are using.  The easiest way is to use the help information built into the program itself by running the command with `-h` or `--help` flags (some programs both will work, some it is one or the other) for example:
+```{bash get_help, error=TRUE}
+cd --help
+```
+
+For the command `ls -lh` what effect does the `-lh` argument have (hint: single letter flags can often be combined , so `-lh` is equvalent to `-l -h`).  Show how you figure this out in the chunk below, then use words to give the answer below the chunk. It might also be a good idea to run `ls`, `ls -h`, `ls -l`, `ls -lh` to get a better feel for the effects of these flags.
+
+```{bash error=TRUE}
+
+```
+
+
+
+## Working With Files and Directories
+Run the chunk at the top of this challenge to create a directory named `data-shell` that contains a number of files and subdirectories.  
+
+Now, make a new directory called `text_files` that is a subdirectory of `data-shell/data`, then move all of the files in `data-shell/data` that end in ".txt" to the `text_files` subdirectory, and list the contents of `data-shell/data` and `data-shell/data` `data-shell/data/text_files` to confirm that the files were moved 
+*Hint:* in your command you should not list each ".txt" file individually.
+
+### Moving and Wildcards
+```{bash}
+
+```
+
+### Creating Directories
+In the `data-shell` directory make a new directory and subdirectories with the following structure, then use the `tree` command to confirm that it worked by printing out a tree that looks just like this one:
+
+```
+field_notes/
+└── 2018
+    ├── winter
+    ├── spring
+    ├── summer
+    └── fall
+```
+
+```{bash}
+
+```
+
+
+
+# Session Info
+Always print `sessionInfo` for reproducibility!
+```{r}
+
+```
+

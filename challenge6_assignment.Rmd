@@ -1,0 +1,133 @@
+---
+title: "Challenge 6"
+subtitle: "Splitting up is hard to do."
+output:
+  html_document:
+    df_print: paged
+---
+
+# Challenge 6
+The goal of this challenge is to begin synthesize what you have learned about R, bash, and demultiplexing so that you can demultiplex a new dataset, to prepare it for running through DADA2.  You will start with raw FASTQ files and a map file that will be supplied to you.  You will find this [overview of the DADA2 pipeline](https://gitlab.oit.duke.edu/IBIEM/IBIEM_2018_2019/blob/master/content/lessons/dada2_pipeline_toc.md) very helpful in completing this assignment.
+
+You will find the FASTQs, map file, and an md5 checksum file in `/data/tutorial_data/ibiem2016_subset`.  The name of the map file is `ibiem_2017_map_v3.txt`
+
+You must fill in the chunks below as indicated, but you are free to add other chunks too.  To submit this assignment for full credit you should *commit* and *push*:
+
+1. This file (`challenge6_assignment.Rmd`)
+2. The knited version of this file (`challenge6_assignment.html`)
+
+These are the *ONLY* files you should include in your repo.  I strongly recommend that you put temporary files in a subdirectory of `/tmp`, for example `/tmp/scratch/challenge6`.  If you don't follow this advice, but instead put temporary files in your repo directory, you *must* be sure not to commit them to your repo, you will lose points if you do.
+
+
+
+# Setup
+## Load Libraries
+```{r}
+
+```
+
+## Paths, Directories, and Shell Variables
+To keep the code readable and portable, it is nice to assign paths to variables.  Use the R `Sys.setenv` command to make shell variables that are accessible in the bash chunks.
+
+```{r}
+
+```
+
+## Check Data Integrity
+Run `md5sum` on the raw data to be sure there has been no data loss or corruption.  The md5 checksum file is in the same directory as the FASTQs and map file.
+```{bash}
+
+```
+
+
+# Assemble Metadata Table (Map)
+You are in luck, because you there is a metadata table already made for you.  Let's check it out
+## Examine Metadata Table (Map)
+```{r load_map}
+meta.df = read_tsv(map.file)
+head(meta.df)
+```
+
+## Check  Map File
+QIIME is inflexible about map file formatting.  Fortunately, QIIME includes the 
+[validate_mapping_file.py](http://qiime.org/scripts/validate_mapping_file.html)
+script that checks your map file to see if the format meets its specifications.  Unfortunately the script is not very robust, so incorrectly formated map files sometimes make it crash without giving a useful error message.  Let's run it anyway . . .
+
+```{bash}
+
+```
+Once you have run `validate_mapping_file.py` you can view the report through RStudio:
+
+  1. In the *Files* pane, Navigate to `r file.path(output.dir, "validate_mapfile")`
+  2. Click on `sample_metadata.tsv.html` and select *View in Web Browser*
+  3. Look around the output! How does it look?
+
+# Demultiplexing
+
+## Running split_libraries_fastq.py
+Start off running split_libraries_fastq.py on the R1 FASTQ
+```{bash}
+
+```
+
+Now verify that most of the reads are demultiplexed to a sample
+```{bash}
+
+```
+
+
+
+## Running `split_sequence_file_on_sample_ids.py`
+Now let's run `split_sequence_file_on_sample_ids.py` to actually do the demultiplexing
+
+```{bash}
+
+```
+
+Now let's check that it worked
+```{bash check_test}
+ls -lSrh $DEMUX_DIR/split_test
+```
+You should see FASTQs ranging in size from about 7kb to 86kb.
+Looks good like we generated a demultiplexed FASTQ for each sample!
+
+## Putting it together for R1 and R2
+Now that we have everything tested, let's put it together to run `split_libraries_fastq.py` and `split_sequence_file_on_sample_ids.py` on both R1 and R2, and do a little cleanup (get rid of the results of `split_libraries_fastq.py` once we have demuxed it.  We can drop "--retain_unassigned_reads" since we have already reviewed the results.
+```{bash}
+
+```
+
+Let's see if that worked!
+```{bash check_demux_dir}
+ls $DEMUX_DIR/
+```
+
+There should be an R1 directory with all the demultiplexed R1 FASTQs and an R2 directory with all the demultiplexed R2 FASTQs.  Let's check to be sure we see all the FASTQs
+
+```{bash check_full_fastqs}
+ls $DEMUX_DIR/R1 $DEMUX_DIR/R2
+
+```
+
+The demuxed R1 reads are in the `R1` directory and the demuxed reverse reads should be in the `R2` directory.  We are ready for DADA2!
+
+
+## Bonus: Rename and move split FASTQs
+*This part is an optional bonus.  You do not need to do it to get full credit for this assignment.*
+
+Sometimes it is less confusing to put all the demuxed FASTQs in the same directory.  Right now the R1 and R2 FASTQs for each sample have the same name.  If you combined them now into the same directory, one of the pair will overwrite the other.  To combine them, you will first need to rename them by adding "R1" or "R2" to the sample name.  You need to do this with code, it is too easy to mess up if you try to do it by hand!
+```{r}
+
+```
+
+Now check your work
+```{r check_combined}
+list.files(demux.dir)
+```
+
+
+# Session Info
+Always print `sessionInfo` for reproducibility!
+```{r}
+
+```

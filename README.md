@@ -1,6 +1,6 @@
 # Challenge 5: She sells bash shells by the seashore
-- *Assigned: September 20, 2019*
-- *Due: at 6pm on October 4, 2019*
+- *Assigned: September 18, 2020*
+- *Due: at 6pm on October 2, 2020*
 
 ## Assignment
 You should have received an email invitation to access this assigment in Github Classroom.  If you haven't received it, please [post an Issue](https://github.com/IBIEM/community/issues)

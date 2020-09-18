@@ -7,7 +7,7 @@ output:
 ---
 
 # Challenge 5
-These questions are based on the following SWC lessions.  You should be able to find answers to very similar problems within these lessons.  All of your answers should use *bash* not *R*.
+These questions are based on the following SWC lessions.  You should be able to find answers to very similar problems within these lessons.  All of your answers should use *bash*!  Do not use *R* OR the RStudio *Files* pane.
 
 - [Introducing the Shell](http://swcarpentry.github.io/shell-novice/01-intro/index.html)
 - [Navigating Files and Directories](http://swcarpentry.github.io/shell-novice/02-filedir/index.html)
@@ -48,7 +48,7 @@ For the command `ls -lh` what effect does the `-lh` argument have (hint: single 
 ## Working With Files and Directories
 Run the chunk at the top of this challenge to create a directory named `data-shell` that contains a number of files and subdirectories.  
 
-Now, make a new directory called `text_files` that is a subdirectory of `data-shell/data`, then move all of the files in `data-shell/data` that end in ".txt" to the `text_files` subdirectory, and list the contents of `data-shell/data` and `data-shell/data` `data-shell/data/text_files` to confirm that the files were moved 
+Now, make a new directory called `text_files` that is a subdirectory of `data-shell/data`, then move all of the files in `data-shell/data` that end in ".txt" to the `text_files` subdirectory, and list the contents of `data-shell/data` and `data-shell/data` `data-shell/data/text_files` to confirm that the files were moved.  
 *Hint:* in your command you should not list each ".txt" file individually.
 
 ### Moving and Wildcards
@@ -84,6 +84,9 @@ FAVORITE_FRUIT="apples"
 echo "I like ${FAVORITE_FRUIT}."
 ```
 
+Notice that we define a variable in bash using just the variable name `FAVORITE_FRUIT`, but to use the varible we refer to it by the variable name prefixed with a dollar sign `$FAVORITE_FRUIT`, or the variable name enclosed in curly brackets, then prefixed with a dollar sign `${FAVORITE_FRUIT}`.
+
+
 ### Care and Feeding of Bash Variables
 One difference between bash and most other programming languages is that, by default, it doesn't complain if you use a variable that you haven't defined, bash just assumes that the value of an undefined variable is an empty string
 
@@ -98,7 +101,7 @@ echo "I like drinking ${FAVORITE_DRINK}."
 ```
 
 ### Global Bash Variables in RMarkdown
-One quirk of bash chunks in Rmarkdown documents is that each bash chunk in an has it's own environment independent of the other chunks, so variables defined in one bash chunk are not available in other chunks
+One quirk of bash chunks in Rmarkdown documents is that each bash chunk has it's own environment, which is independent of the other chunks.  This means that variables defined in one bash chunk are not available in other chunks.  Remmeber we defined `$FAVORITE_FRUIT` at the top of this section, but the chunk below doesn't know anything about it!
 
 ```{bash independent_chunks, error=TRUE}
 set -u
@@ -107,7 +110,7 @@ echo "I like ${FAVORITE_FRUIT}."
 
 One hack that allows you to share bash variables between bash chunks is to set a bash variable in an *R chunk* using the R function `Sys.setenv`.  
 
-Look up how to use `Sys.setenv`, then use the R chunk below to define the bash variable `$FAVORITE_DESSERT` so that the bash chunk below runs correctly
+Look up how to use `Sys.setenv`, then use the R chunk below to define the bash variable `$FAVORITE_DESSERT` so that the bash chunk below it runs correctly.
 
 ```{r}
 
